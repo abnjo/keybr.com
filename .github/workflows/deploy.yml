@@ -7,7 +7,7 @@ on:
 
 # Grant the necessary permissions for the workflow to publish to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
