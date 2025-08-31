@@ -1,10 +1,11 @@
-name: Build and Deploy to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - master # Or 'main', depending on your default branch name
+      - master  # IMPORTANT: Change this to 'main' if that is your default branch name
 
+# Grant the necessary permissions for the workflow to publish to GitHub Pages
 permissions:
   contents: read
   pages: write
@@ -13,23 +14,35 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    # Add this 'env' block to match the ci.yml file
+    env:
+      DATABASE_CLIENT: sqlite
+      NODE_COMPILE_CACHE: /tmp/node-compile-cache
+
     steps:
+      # 1. Checks out your repository's code so the workflow can access it
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
+      # 2. Sets up Node.js, using the same version and caching as your CI workflow
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "22.x"
+          cache: "npm"
 
+      # 3. Installs dependencies using 'npm ci' which is faster and safer for CI/CD
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
+      # 4. Runs the build script to generate the static files in the /dist folder
       - name: Build project
         run: npm run build
 
+      # 5. Deploys the contents of the /dist folder to a special 'gh-pages' branch
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # The folder created by the build script
+          publish_dir: ./dist
