@@ -34,7 +34,7 @@ export class InputHandler implements Focusable {
   }
 
   focus() {
-    this.#input?.focus({ preventScroll: true });
+    this.#input?.focus();
   }
 
   blur() {
@@ -75,9 +75,9 @@ export class InputHandler implements Focusable {
   #clearInput() {
     const input = this.#input;
     if (input != null) {
-      // Clear the input value to prepare for the next character.
-      // This is the most compatible way for mobile devices.
-      input.value = "";
+      // Keep the input value non-empty, otherwise Safari will not generate
+      // events `deleteContentBackward` and `deleteWordBackward`.
+      input.value = "?";
     }
   }
 
@@ -124,7 +124,6 @@ export class InputHandler implements Focusable {
     }
     switch (event.inputType) {
       case "insertText":
-      case "insertCompositionText": // Accept composition events for mobile compatibility
         this.#appendChar(event);
         this.#clearInput();
         break;

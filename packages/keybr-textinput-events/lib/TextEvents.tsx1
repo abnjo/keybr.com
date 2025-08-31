@@ -54,12 +54,11 @@ function useInputHandler() {
 
 const divStyle = {
   position: "absolute",
-  left: "-9999px",
-  top: "-9999px",
-  opacity: "0",
-  // Ensure the element has a size so mobile browsers will focus it.
-  width: "10px",
-  height: "10px",
+  insetInlineStart: "0px",
+  insetBlockStart: "0px",
+  inlineSize: "0px",
+  blockSize: "0px",
+  overflow: "hidden",
 } satisfies CSSProperties;
 
 const inputStyle = {
