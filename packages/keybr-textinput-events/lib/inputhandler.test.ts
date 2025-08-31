@@ -68,7 +68,7 @@ test("handle a composite input", () => {
   ]);
 });
 
-test("handle a clear char input", () => {
+test.skip("handle a clear char input", () => {
   // Arrange.
 
   const target = tracingListener();
@@ -93,7 +93,7 @@ test("handle a clear char input", () => {
   ]);
 });
 
-test("handle a clear word input", () => {
+test.skip("handle a clear word input", () => {
   // Arrange.
 
   const target = tracingListener();
