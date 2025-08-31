@@ -29,13 +29,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # --- THIS IS THE MISSING STEP ---
-      - name: Compile TypeScript to JavaScript
-        run: npm run compile
+      # --- THIS IS THE KEY CHANGE ---
+      # Run the project's own build script
+      - name: Build the static website
+        run: sh ./build.sh
 
-      - name: Build the final web application
-        run: npm run build
-
-      # --- Let's find the correct output path ---
-      - name: Find the main index.html file
-        run: find . -name "index.html"
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # The build.sh script creates a top-level /dist directory
+          publish_dir: ./dist
