@@ -1,0 +1,15 @@
+{
+  "installCommand": "npm ci",
+  "builds": [
+    {
+      "src": "root/lib/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/root/lib/index.js"
+    }
+  ]
+}
