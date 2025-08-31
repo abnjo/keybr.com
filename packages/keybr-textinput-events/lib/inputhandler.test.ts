@@ -68,6 +68,7 @@ test("handle a composite input", () => {
   ]);
 });
 
+// SKIPPING THIS TEST BECAUSE OUR ANDROID FIX REQUIRES THE INPUT TO BE CLEARED
 test.skip("handle a clear char input", () => {
   // Arrange.
 
@@ -93,6 +94,7 @@ test.skip("handle a clear char input", () => {
   ]);
 });
 
+// SKIPPING THIS TEST BECAUSE OUR ANDROID FIX REQUIRES THE INPUT TO BE CLEARED
 test.skip("handle a clear word input", () => {
   // Arrange.
 
