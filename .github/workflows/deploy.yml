@@ -1,12 +1,17 @@
-name: Debug Build Output
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - master # Or 'main', depending on your default branch name
+      - master  # IMPORTANT: Change this to 'main' if that is your default branch name
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  debug-build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     env:
       DATABASE_CLIENT: sqlite
@@ -24,9 +29,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
+      # --- THIS IS THE MISSING STEP ---
+      - name: Compile TypeScript to JavaScript
+        run: npm run compile
+
+      - name: Build the final web application
         run: npm run build
 
-      # --- THIS IS THE NEW, SMARTER DEBUGGING STEP ---
-      - name: Find all index.html files
+      # --- Let's find the correct output path ---
+      - name: Find the main index.html file
         run: find . -name "index.html"
